@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+
 ENV_VARS_DIR="${ENV_VARS_DIR:-/mnt-env-vars}"
 PHUSION_ENV_DIR=/etc/container_environment
 
