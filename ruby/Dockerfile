@@ -70,4 +70,3 @@ COPY syslog-ng-$_USER.conf /etc/syslog-ng/conf.d/$_USER.conf
 ENTRYPOINT ["/sbin/my_init"]
 
 #PUSH elifarley/docker-rails:ruby-2.3.0
-
