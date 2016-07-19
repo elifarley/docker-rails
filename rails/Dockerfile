@@ -32,7 +32,7 @@ if test -f db-migrate.sh; then \
   chown root:root db-migrate.sh && chmod 700 db-migrate.sh && \
   mv db-migrate.sh /etc/my_init.d/90-db-migrate.sh; \
 fi; \
-chmod -x /etc/service/syslog-ng/run /etc/service/syslog-forwarder/run
+rm -fv /etc/service/syslog-ng/run /etc/service/syslog-forwarder/run
 
 ONBUILD EXPOSE 8080
 
