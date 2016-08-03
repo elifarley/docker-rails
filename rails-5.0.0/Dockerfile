@@ -1,4 +1,4 @@
-FROM m4ucorp/ruby:2.3.0
+FROM m4ucorp/tools:docker-rails.ruby-2.3.0
 MAINTAINER Leonardo Bernardelli <leonardo.bernardelli@m4u.com>
 
 ENV RAILS_VERSION 5.0.0
@@ -17,9 +17,7 @@ ONBUILD COPY Gemfile* ./
 #ONBUILD MOUNT vendor:/app/vendor
 ONBUILD COPY vendor /app/vendor
 ONBUILD RUN bundle install --no-cache --jobs 4 --retry 3 --local && \
-  rm -rf "./gem-home"/cache && \
-  tar -cjf vendor.tbz -C vendor --exclude=*.gem . && \
-  du -hs vendor.tbz
+  rm -rf "./gem-home"/cache
 
 ONBUILD RUN mkdir -p /etc/service/app && mv /app/app-service.sh /etc/service/app/run && chmod +x /etc/service/app/run
 ONBUILD COPY . /app/
@@ -31,8 +29,7 @@ fi; \
 if test -f db-migrate.sh; then \
   chown root:root db-migrate.sh && chmod 700 db-migrate.sh && \
   mv db-migrate.sh /etc/my_init.d/90-db-migrate.sh; \
-fi; \
-chmod -x /etc/service/syslog-ng/run /etc/service/syslog-forwarder/run
+fi;
 
 ONBUILD EXPOSE 8080
 

@@ -1,11 +1,6 @@
-# Use phusion/baseimage as base image. To make your builds
-# reproducible, make sure you lock down to a specific version, not
-# to `latest`! See
-# https://github.com/phusion/baseimage-docker/blob/master/Changelog.md
-# for a list of version numbers.
-FROM phusion/baseimage:0.9.18
-#FROM phusion/passenger-ruby22
-MAINTAINER Elifarley Cruz <elifarley@gmail.com>
+FROM m4ucorp/tools:base-image-0.9.19
+MAINTAINER Elifarley Cruz <elifarley.cruz@m4u.com.br>
+MAINTAINER Leonardo Bernardelli <leonardo.bernardelli@m4u.com.br>
 
 ENV _USER app
 ENV LANG en_US.UTF-8
@@ -60,13 +55,7 @@ RUN printf 'gem: --no-document' > .gemrc && \
   rm -rf "$GEM_HOME"/cache && \
   rm -rf $RM_ITEMS
 
-
 RUN printf "#!/bin/sh\ndate > /tmp/boot-time.txt" > /etc/my_init.d/00-log-boot-time.sh
-#ADD https://raw.githubusercontent.com/elifarley/container-entrypoint/master/lib/env-vars.sh /etc/my_init.d/01-env-vars.sh
-
-COPY syslog-ng-$_USER.conf /etc/syslog-ng/conf.d/$_USER.conf
 
 # Use baseimage-docker's init system.
 ENTRYPOINT ["/sbin/my_init"]
-
-#PUSH elifarley/docker-rails:ruby-2.3.0

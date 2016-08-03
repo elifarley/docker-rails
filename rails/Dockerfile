@@ -1,5 +1,6 @@
 FROM m4ucorp/tools:docker-rails.ruby-2.3.0
-MAINTAINER Elifarley Cruz <elifarley@gmail.com>
+MAINTAINER Elifarley Cruz <elifarley.cruz@m4u.com.br>
+MAINTAINER Leonardo Bernardelli <leonardo.bernardelli@m4u.com.br>
 
 ENV RAILS_VERSION 4.2.5.1
 
@@ -17,9 +18,7 @@ ONBUILD COPY Gemfile* ./
 #ONBUILD MOUNT vendor:/app/vendor
 ONBUILD COPY vendor /app/vendor
 ONBUILD RUN bundle install --no-cache --jobs 4 --retry 3 --local && \
-  rm -rf "./gem-home"/cache && \
-  tar -cjf vendor.tbz -C vendor --exclude=*.gem . && \
-  du -hs vendor.tbz
+  rm -rf "./gem-home"/cache
 
 ONBUILD RUN mkdir -p /etc/service/app && mv /app/app-service.sh /etc/service/app/run && chmod +x /etc/service/app/run
 ONBUILD COPY . /app/
@@ -31,8 +30,7 @@ fi; \
 if test -f db-migrate.sh; then \
   chown root:root db-migrate.sh && chmod 700 db-migrate.sh && \
   mv db-migrate.sh /etc/my_init.d/90-db-migrate.sh; \
-fi; \
-rm -rfv /etc/service/syslog-ng /etc/service/syslog-forwarder
+fi;
 
 ONBUILD EXPOSE 8080
 
