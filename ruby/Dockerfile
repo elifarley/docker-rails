@@ -62,8 +62,9 @@ RUN printf 'gem: --no-document' > .gemrc && \
   rm -rf $RM_ITEMS
 
 
-RUN printf "#!/bin/sh\ndate > /tmp/boot-time.txt" > /etc/my_init.d/00-log-boot-time.sh
-ADD https://raw.githubusercontent.com/elifarley/container-entrypoint/master/lib/env-vars.sh /etc/my_init.d/01-env-vars.sh
+RUN printf "#!/bin/sh\ndate > /tmp/boot-time.txt" > /etc/my_init.d/00-log-boot-time.sh && \
+echo '#!/bin/sh' > /etc/my_init.d/00-env-vars.sh && chmod a=,u=rwx /etc/my_init.d/00-env-vars.sh && \
+curl -fsSL https://raw.githubusercontent.com/elifarley/container-entrypoint/master/lib/env-vars.sh >> /etc/my_init.d/00-env-vars.sh
 
 COPY syslog-ng-$_USER.conf /etc/syslog-ng/conf.d/$_USER.conf
 
