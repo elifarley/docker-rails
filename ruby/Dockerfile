@@ -29,7 +29,8 @@ ENV RM_ITEMS "\
 /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/lib/apt /var/lib/dpkg /var/backups/* /usr/share/man /usr/share/doc\
 "
 
-RUN locale-gen $LANG && dpkg-reconfigure locales && /usr/sbin/update-locale LANG=$LANG
+RUN locale-gen $LANG && dpkg-reconfigure locales && /usr/sbin/update-locale LANG=$LANG && \
+touch /etc/service/syslog-ng/down /etc/service/syslog-forwarder/down
 
 RUN printf 'APT::Get::Install-Recommends "false";\nDpkg::Options {\n"--force-confdef";\n"--force-confold";\n}' \
 > /etc/apt/apt.conf.d/local && apt-get update && apt-get -y dist-upgrade && \
