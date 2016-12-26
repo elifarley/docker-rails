@@ -2,12 +2,6 @@ FROM m4ucorp/tools:docker-rails.ruby-2.3.0
 MAINTAINER Elifarley Cruz <elifarley.cruz@m4u.com.br>
 MAINTAINER Leonardo Bernardelli <leonardo.bernardelli@m4u.com.br>
 
-ENV RAILS_VERSION 4.2.5.1
-
-RUN gem --config-file .gemrc install rails --version "$RAILS_VERSION" && \
-gem --config-file .gemrc install puma --version 3.1.0 && \
-  rm -rf "$GEM_HOME"/cache
-
 COPY puma.rb /etc/
 COPY $_USER-service.sh $_USER.sh $HOME/
 # Possible rocker bug: $HOME is empty
